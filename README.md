@@ -1,4 +1,4 @@
-# AWS Consul Server Ports Terraform Module
+# AWS Consul Server Ports Terraform Module (External Fork)
 
 Creates a standard Consul server security group in AWS.
 
