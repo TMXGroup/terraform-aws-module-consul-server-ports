@@ -4,13 +4,14 @@ terraform {
 
 # https://www.consul.io/docs/agent/options.html#ports
 module "consul_client_ports_aws" {
-  source = "github.com/hashicorp-modules/consul-client-ports-aws"
+  source = "github.com/TMXGroup/terraform-aws-module-consul-client-ports"
 
-  create      = "${var.create}"
-  name        = "${var.name}"
-  vpc_id      = "${var.vpc_id}"
-  cidr_blocks = "${var.cidr_blocks}"
-  tags        = "${var.tags}"
+  create            = "${var.create}"
+  name              = "${var.name}"
+  vpc_id            = "${var.vpc_id}"
+  cidr_blocks       = "${var.cidr_blocks}"
+  consul_sg_group   = "${var.vault_sg_group}"
+  tags              = "${var.tags}"
 }
 
 # Server RPC (Default 8300) - TCP. This is used by servers to handle incoming requests from other agents on TCP only.
