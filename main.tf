@@ -24,6 +24,7 @@ resource "aws_security_group_rule" "server_rpc_tcp" {
   from_port                 = 8300
   to_port                   = 8300
   source_security_group_id  = "${var.vault_sg_group}"
+  description               = "Vault cluster SG"
 }
 
 resource "aws_security_group_rule" "server_rpc_tcp_internal" {
@@ -35,6 +36,7 @@ resource "aws_security_group_rule" "server_rpc_tcp_internal" {
   from_port                 = 8300
   to_port                   = 8300
   source_security_group_id  = "${module.consul_client_ports_aws.consul_client_sg_id}"
+  description               = "Internal consul cluster SG"
 }
 
 # As of Consul 0.8, it is recommended to enable connection between servers through port 8302 for both
@@ -53,6 +55,7 @@ resource "aws_security_group_rule" "serf_wan_tcp" {
   from_port                 = 8302
   to_port                   = 8302
   source_security_group_id  = "${var.vault_sg_group}"
+  description               = "Vault cluster SG"
 }
 
 resource "aws_security_group_rule" "serf_wan_tcp_internal" {
@@ -64,6 +67,7 @@ resource "aws_security_group_rule" "serf_wan_tcp_internal" {
   from_port                 = 8302
   to_port                   = 8302
   source_security_group_id  = "${module.consul_client_ports_aws.consul_client_sg_id}"
+  description               = "Internal consul cluster SG"
 }
 
 # Serf WAN (Default 8302) - UDP. This is used by servers to gossip over the WAN to other servers on TCP and UDP.
@@ -76,6 +80,7 @@ resource "aws_security_group_rule" "serf_wan_udp" {
   from_port                 = 8302
   to_port                   = 8302
   source_security_group_id  = "${var.vault_sg_group}"
+  description               = "Vault cluster SG"
 }
 
 resource "aws_security_group_rule" "serf_wan_udp_internal" {
@@ -87,4 +92,5 @@ resource "aws_security_group_rule" "serf_wan_udp_internal" {
   from_port                 = 8302
   to_port                   = 8302
   source_security_group_id  = "${module.consul_client_ports_aws.consul_client_sg_id}"
+  description               = "Internal consul cluster SG"
 }
