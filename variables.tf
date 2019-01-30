@@ -17,6 +17,10 @@ variable "cidr_blocks" {
   type        = "list"
 }
 
+variable "vault_sg_group" {
+  description = "sg id from vault cluster"
+}
+
 variable "tags" {
   description = "Optional map of tags to set on resources, defaults to empty map."
   type        = "map"

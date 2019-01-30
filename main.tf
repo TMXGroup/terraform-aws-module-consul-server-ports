@@ -17,14 +17,24 @@ module "consul_client_ports_aws" {
 resource "aws_security_group_rule" "server_rpc_tcp" {
   count = "${var.create ? 1 : 0}"
 
-  security_group_id = "${module.consul_client_ports_aws.consul_client_sg_id}"
-  type              = "ingress"
-  protocol          = "tcp"
-  from_port         = 8300
-  to_port           = 8300
-  cidr_blocks       = ["${var.cidr_blocks}"]
+  security_group_id         = "${module.consul_client_ports_aws.consul_client_sg_id}"
+  type                      = "ingress"
+  protocol                  = "tcp"
+  from_port                 = 8300
+  to_port                   = 8300
+  source_security_group_id  = "${var.vault_sg_group}"
 }
 
+resource "aws_security_group_rule" "server_rpc_tcp_internal" {
+  count = "${var.create ? 1 : 0}"
+
+  security_group_id         = "${module.consul_client_ports_aws.consul_client_sg_id}"
+  type                      = "ingress"
+  protocol                  = "tcp"
+  from_port                 = 8300
+  to_port                   = 8300
+  source_security_group_id  = "${module.consul_client_ports_aws.consul_client_sg_id}"
+}
 
 # As of Consul 0.8, it is recommended to enable connection between servers through port 8302 for both
 # TCP and UDP on the LAN interface as well for the WAN Join Flooding feature. See also: Consul 0.8.0
@@ -36,22 +46,44 @@ resource "aws_security_group_rule" "server_rpc_tcp" {
 resource "aws_security_group_rule" "serf_wan_tcp" {
   count = "${var.create ? 1 : 0}"
 
-  security_group_id = "${module.consul_client_ports_aws.consul_client_sg_id}"
-  type              = "ingress"
-  protocol          = "tcp"
-  from_port         = 8302
-  to_port           = 8302
-  cidr_blocks       = ["${var.cidr_blocks}"]
+  security_group_id         = "${module.consul_client_ports_aws.consul_client_sg_id}"
+  type                      = "ingress"
+  protocol                  = "tcp"
+  from_port                 = 8302
+  to_port                   = 8302
+  source_security_group_id  = "${var.vault_sg_group}"
+}
+
+resource "aws_security_group_rule" "serf_wan_tcp_internal" {
+  count = "${var.create ? 1 : 0}"
+
+  security_group_id         = "${module.consul_client_ports_aws.consul_client_sg_id}"
+  type                      = "ingress"
+  protocol                  = "tcp"
+  from_port                 = 8302
+  to_port                   = 8302
+  source_security_group_id  = "${module.consul_client_ports_aws.consul_client_sg_id}"
 }
 
 # Serf WAN (Default 8302) - UDP. This is used by servers to gossip over the WAN to other servers on TCP and UDP.
 resource "aws_security_group_rule" "serf_wan_udp" {
   count = "${var.create ? 1 : 0}"
 
-  security_group_id = "${module.consul_client_ports_aws.consul_client_sg_id}"
-  type              = "ingress"
-  protocol          = "udp"
-  from_port         = 8302
-  to_port           = 8302
-  cidr_blocks       = ["${var.cidr_blocks}"]
+  security_group_id         = "${module.consul_client_ports_aws.consul_client_sg_id}"
+  type                      = "ingress"
+  protocol                  = "udp"
+  from_port                 = 8302
+  to_port                   = 8302
+  source_security_group_id  = "${var.vault_sg_group}"
+}
+
+resource "aws_security_group_rule" "serf_wan_udp_internal" {
+  count = "${var.create ? 1 : 0}"
+
+  security_group_id         = "${module.consul_client_ports_aws.consul_client_sg_id}"
+  type                      = "ingress"
+  protocol                  = "udp"
+  from_port                 = 8302
+  to_port                   = 8302
+  source_security_group_id  = "${module.consul_client_ports_aws.consul_client_sg_id}"
 }
